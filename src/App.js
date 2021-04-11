@@ -1,17 +1,41 @@
-import React from 'react'
-import './App.css';
-import Cart from './Commonents/Cart'
-import Products from './Commonents/Products'
-import Menu from './Commonents/Menu'
+import React, {useState} from 'react'
+import Cart from "./components/Cart";
+import Menu from "./components/Menu";
+import Products from "./components/Products";
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  
+} from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-     <Cart />
-     <Products />
-     <Menu />
+  const [cart, setCart] = useState([])
 
+  const addToCart = (product) => {
+    setCart((state)=> [...state, product])
+  }
+
+  const removeFromCart = (product) => {
+
+  }
+
+  // console.log(cart);
+  return (
+    <Router>
+    <div className="p-4 w-96 mx-auto">
+      <Menu cartCount={cart.length} />
+      <Switch>
+        <Route path="/" exact>
+      <Products addToCart={addToCart} />
+      </Route>
+      <Route path="/cart">
+      <Cart cart={cart} removeFromCart={removeFromCart} />
+      </Route>
+    </Switch>
     </div>
+    </Router>
   );
 }
 
